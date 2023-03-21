@@ -2,6 +2,7 @@
 import { useWarehouseStore } from "../stores/index.js";
 
 const warehouseStore = useWarehouseStore();
+
 </script>
 
 <template>

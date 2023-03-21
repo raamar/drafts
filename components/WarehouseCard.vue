@@ -1,7 +1,14 @@
 <script setup>
+import { useWarehouseStore } from "@/stores/index.js";
+const warehouseStore = useWarehouseStore();
+
 const { warehouse } = defineProps({
   warehouse: Object,
 });
+
+const onLikeBtnClick = () => {
+  warehouseStore.toggleLiked(warehouse.id);
+};
 </script>
 
 <template>
@@ -45,8 +52,11 @@ const { warehouse } = defineProps({
       </div>
 
      <div class="wh-coll__btns">
-       <button class="wh-coll__add">Добавить в сделки</button>
-        <button class="wh-coll__like">
+       <button class="wh-coll__add"
+       >Добавить в сделки</button>
+        <button class="wh-coll__like"
+        @click="onLikeBtnClick(warehouse.id)"
+        >
           <img src="https://i.ibb.co/LhZbjM1/favourite.png" alt="favourite" >
        </button>
      </div>
@@ -77,6 +87,8 @@ const { warehouse } = defineProps({
   grid-template-columns: 31% 66%;
   column-gap: 20px;
 }
+
+
 
 .wh-coll__type {
   margin-bottom: 12px;
@@ -263,6 +275,8 @@ color: #2D3B87;
 background: #F4F5F9;
 border-radius: 10px;
 border: none;
+
+  cursor: pointer;
 }
 
 .wh-coll__like {
@@ -278,5 +292,45 @@ justify-self: flex-end;
 background: #F4F5F9;
 border-radius: 10px;
 border: none;
+
+  cursor: pointer;
+}
+
+@media (max-width: 1199.98px) {
+  .wh-coll__info {
+  grid-template-columns: 39% 61%;
+}
+
+.wh-coll__btns {
+  grid-template-columns: 74% 21%;
+}
+
+.wh-coll__add {
+width: 100%;}
+}
+
+@media (max-width: 991.98px) {
+.wh-coll__item {
+    height: auto;
+    
+    grid-template-columns: 100%;
+}
+.wh-coll__info {
+  grid-template-columns: 39% 61%;
+}
+
+.wh-coll__data {
+  height: auto;
+}
+
+.wh-coll__btns {
+  grid-template-columns: 74% 24%;
+}
+}
+
+@media (max-width: 767.98px) {
+.wh-coll__info {
+  grid-template-columns: 100%;
+ }
 }
 </style>
