@@ -1,5 +1,6 @@
 <script setup>
 import { useWarehouseStore } from "@/stores/index.js";
+
 const warehouseStore = useWarehouseStore();
 </script>
 
@@ -18,7 +19,9 @@ const warehouseStore = useWarehouseStore();
           <li>Склад</li>
         </NuxtLink>
         <NuxtLink to="/deals" class="header-nav__item">
-          <li>Сделки</li></NuxtLink
+          <li>
+            <span>Сделки({{ warehouseStore.numberOfDeals }})</span>
+          </li></NuxtLink
         >
       </ul>
     </nav>
@@ -102,7 +105,8 @@ a {
 
 .header-nav__item:nth-child(3):before {
   position: absolute;
-  transform: translate(13px, -23px);
+  /* transform: translate(13px, -23px); */
+  transform: translate(23px, -23px);
 
   width: 20px;
   height: 20px;

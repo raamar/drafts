@@ -12,6 +12,7 @@ onMounted(() => {
   <div class="wrapper">
     <div class="container">
       <HeaderNav />
+      <InputsFilterAndSearch />
       <slot />
     </div>
   </div>
