@@ -1,17 +1,13 @@
 <script setup>
-import { useWarehouseStore } from "@/stores/index.js";
-const warehouseStore = useWarehouseStore();
+import { useWarehouseStore } from '@/stores/index.js'
+const warehouseStore = useWarehouseStore()
 </script>
 
 <template>
-  <div v-if="warehouseStore.deals.length > 0">
+  <div v-if="warehouseStore.deals.total > 0">
     <div>
       <TransitionGroup name="list">
-        <DealCard
-          v-for="warehouse in warehouseStore.searchNameOnDeals"
-          :key="warehouse.id"
-          :warehouse="warehouse"
-        />
+        <DealCard v-for="warehouse in warehouseStore.searchNameOnDeals" :key="warehouse.id" :warehouse="warehouse" />
       </TransitionGroup>
     </div>
   </div>
