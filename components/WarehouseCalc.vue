@@ -1,15 +1,18 @@
 <script setup>
+import { useWarehouseStore } from "@/stores/index.js";
+const warehouseStore = useWarehouseStore();
+
 const { warehouse } = defineProps(["warehouse"]);
 </script>
 
 <template>
       <div class="wh-coll__data">
-        <div class="wh-coll__price">{{ warehouse.price }} &#8381</div>
+        <div class="wh-coll__price">{{ warehouseStore.deals[warehouse.id]?.price || 0 }} &#8381</div>
         
         <div class="wh-coll__coll">
           <div class="wh-coll__qty-row">
           <div class="wh-coll__qty-text">Количество</div>
-          <div class="wh-coll__qty-num">{{ warehouse.quantity}} шт.</div>
+          <div class="wh-coll__qty-num">{{ warehouseStore.deals[warehouse.id]?.quantity || 0 }} шт.</div>
         </div>
 
         <div class="wh-coll__cost-row">

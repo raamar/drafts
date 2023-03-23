@@ -1,7 +1,7 @@
 <script setup>
-import { useWarehouseStore } from "@/stores/index.js";
+import { useWarehouseStore } from '@/stores/index.js'
 
-const warehouseStore = useWarehouseStore();
+const warehouseStore = useWarehouseStore()
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const warehouseStore = useWarehouseStore();
         </NuxtLink>
         <NuxtLink to="/deals" class="header-nav__item">
           <li>
-            <span>Сделки({{ warehouseStore.numberOfDeals }})</span>
+            <span>Сделки({{ warehouseStore.deals.total }})</span>
           </li></NuxtLink
         >
       </ul>
@@ -85,7 +85,7 @@ a {
   height: 20px;
 
   display: block;
-  content: "";
+  content: '';
 
   background: url(https://i.ibb.co/LhZbjM1/favourite.png) top center no-repeat;
 }
@@ -98,7 +98,7 @@ a {
   height: 20px;
 
   display: block;
-  content: "";
+  content: '';
 
   background: url(https://i.ibb.co/ZJ3XWzs/stock.png) top center no-repeat;
 }
@@ -112,7 +112,7 @@ a {
   height: 20px;
 
   display: block;
-  content: "";
+  content: '';
 
   background: url(https://i.ibb.co/7WJjc7S/bag.png) top center no-repeat;
 }
