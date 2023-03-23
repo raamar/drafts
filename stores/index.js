@@ -9,6 +9,7 @@ export const useWarehouseStore = defineStore('warehouses-store', {
       deals: {
         total: 0,
       },
+      liked: {},
       names: '',
     }
   },
@@ -24,7 +25,7 @@ export const useWarehouseStore = defineStore('warehouses-store', {
         '>index,  likedWarehouses:',
         this.warehouses.filter((warehouse) => warehouse.liked)
       )
-      return this.warehouses.filter((warehouse) => warehouse.liked)
+      return this.warehouses.filter((warehouse) => this.liked[warehouse.id])
     },
 
     // вычисляет общее количество deals, складывая значение свойства quantity каждого объекта deals с текущим значением total.
@@ -85,10 +86,7 @@ export const useWarehouseStore = defineStore('warehouses-store', {
 
     // переключает значение лайка на элементе с указанным ID. Если аргумент force не указан, значение лайка будет переключено на противоположное. Если указан аргумент force, то значение лайка будет установлено в соответствии с его значением
     async toggleLiked(id, force) {
-      const item = this.item(id)
-      console.log('> index, toggleLiked => item ', item)
-      item.liked = force === undefined ? !item.liked : force
-      console.log('> index, toggleLiked => item.liked', item.liked)
+      this.liked[id] = force === undefined ? !this.liked[id] : force
     },
   },
 })
