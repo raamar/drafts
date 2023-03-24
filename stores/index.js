@@ -1,92 +1,114 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useWarehouseStore = defineStore('warehouses-store', {
+export const useWarehouseStore = defineStore("warehouses-store", {
   state: () => {
     return {
-      // warehouses: useLocalStorage('warehouses', []),
-      // deals: useLocalStorage('deals', []),
+      // warehouses: useLocalStorage("warehouses", []),
+      // deals: useLocalStorage("deals", []),
+      // liked: useLocalStorage("liked", {}),
+
       warehouses: [],
       deals: {
         total: 0,
       },
       liked: {},
-      names: '',
-    }
+      search: "",
+      show: "",
+    };
   },
   getters: {
-    // находит элемент в массиве warehouses по заданному идентификатору id.
     item() {
-      return (id) => this.warehouses.find((warehouse) => warehouse.id === id)
+      return (id) => this.warehouses.find((warehouse) => warehouse.id === id);
     },
 
-    // возвращает массив складов, которые отмечены как "понравившиеся". В данном случае фильтрация происходит по полю liked в объектах массива warehouses.
     likedWarehouses() {
-      console.log(
-        '>index,  likedWarehouses:',
-        this.warehouses.filter((warehouse) => warehouse.liked)
-      )
-      return this.warehouses.filter((warehouse) => this.liked[warehouse.id])
+      return this.warehouses.filter((warehouse) => this.liked[warehouse.id]);
     },
 
-    // вычисляет общее количество deals, складывая значение свойства quantity каждого объекта deals с текущим значением total.
-    numberOfDeals() {
-      return this.deals
+    filteredListWarehouses() {
+      if (this.show) {
+        return this.warehouses.filter((item) => item.type === this.show);
+      } else if (this.search) {
+        return this.warehouses.filter((item) =>
+          item.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      } else {
+        return this.warehouses;
+      }
     },
 
-    // фильтрации списка на странице Склад по имени.
-    searchNameOnWarehouses() {
-      let search = this.names
-      return this.warehouses.filter(function (elem) {
-        if (search === '') return true
-        else return elem.name.indexOf(search) > -1
-      })
+    sortedListWarehouses() {
+      return this.filteredListWarehouses.sort((a, b) => {
+        return a.type > b.type ? 1 : -1;
+      });
     },
 
-    // фильтрации списка на странице Сделки по имени.
-    searchNameOnDeals() {
-      let search = this.names
-      const deals = this.deals
-      return this.warehouses.filter(function (elem) {
-        if (deals[elem.id] === undefined) return false
-        if (search === '') return true
-        else return elem.name.indexOf(search) > -1
-      })
+    filteredListDeals() {
+      if (this.show) {
+        return this.warehouses.filter((item) => item.type === this.show);
+      } else if (this.search) {
+        return this.warehouses.filter((item) =>
+          item.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      } else {
+        return this.warehouses;
+      }
     },
 
-    // фильтрации списка на странице Избранное по имени.
-    searchNameOnFavourites() {
-      let search = this.names
-      return this.likedWarehouses.filter(function (elem) {
-        if (search === '') return true
-        else return elem.name.indexOf(search) > -1
-      })
+    sortedListDeals() {
+      return this.filteredListDeals.sort((a, b) => {
+        return a.type > b.type ? 1 : -1;
+      });
+    },
+
+    filteredListFavourites() {
+      if (this.show) {
+        return this.likedWarehouses.filter((item) => item.type === this.show);
+      } else if (this.search) {
+        return this.likedWarehouses.filter((item) =>
+          item.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      } else {
+        return this.likedWarehouses;
+      }
+    },
+
+    sortedListFavourites() {
+      return this.filteredListFavourites.sort((a, b) => {
+        return a.type > b.type ? 1 : -1;
+      });
     },
   },
 
   actions: {
-    // извлекает список складов из веб-API. Возвращает объекты из этой коллекции и сохраняет их в переменной warehouses.
     async fetchWarehouse() {
-      this.warehouses = await fetch('/api/warehouses').then((res) => res.json())
-      console.log('> index, fetchWarehouse => this.warehouses ', this.warehouses)
+      this.warehouses = await fetch("/api/warehouses").then((res) =>
+        res.json()
+      );
     },
 
-    // добавляет товар в корзину. Проверяет, есть ли уже такой же товар в корзине. Если да, то количество этого товара увеличивается, иначе товар добавляется с количеством 1.
+    async setShow(show) {
+      this.show = show;
+    },
+
     async addToDeals(warehouse) {
-      const item = this.deals[warehouse.id]
+      const item = this.deals[warehouse.id];
 
       if (item) {
-        item.quantity++
-        item.price = (item.quantity * item.price) / (item.quantity - 1)
+        item.quantity++;
+        item.price = (item.quantity * item.price) / (item.quantity - 1);
       } else {
-        this.deals[warehouse.id] = { quantity: 1, price: parseFloat(warehouse.cost.replace(' ', '')) }
+        this.deals[warehouse.id] = {
+          quantity: 1,
+          price: parseFloat(warehouse.cost.replace(" ", "")),
+        };
       }
 
-      this.deals.total++
+      this.deals.total++;
     },
 
-    // переключает значение лайка на элементе с указанным ID. Если аргумент force не указан, значение лайка будет переключено на противоположное. Если указан аргумент force, то значение лайка будет установлено в соответствии с его значением
     async toggleLiked(id, force) {
-      this.liked[id] = force === undefined ? !this.liked[id] : force
+      this.liked[id] = force === undefined ? !this.liked[id] : force;
     },
   },
-})
+});

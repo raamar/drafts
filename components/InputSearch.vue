@@ -4,13 +4,13 @@ import { storeToRefs } from "pinia";
 
 const warehouseStore = useWarehouseStore();
 
-const { names } = storeToRefs(warehouseStore);
+const { search } = storeToRefs(warehouseStore);
 </script>
 
 <template>
   <div class="inputs-coll__search">
     <input
-      v-model="names"
+      v-model="search"
       class="inputs-coll__input"
       type="text"
       name="search"
@@ -64,7 +64,7 @@ const { names } = storeToRefs(warehouseStore);
   border: none;
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 579.98px) {
   .inputs-coll__search {
     justify-self: center;
   }

@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 579.98px) {
   .inputs-coll {
     grid-template-columns: 100%;
     row-gap: 20px;

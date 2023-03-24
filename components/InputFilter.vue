@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import { useWarehouseStore } from "@/stores/index.js";
+
+const warehouseStore = useWarehouseStore();
+</script>
 
 <template>
   <div class="inputs-coll__filter">
     <ul class="inputs-coll__list">
-      <li class="inputs-coll__item">Все типы</li>
-      <li class="inputs-coll__item">Прямые продажи</li>
-      <li class="inputs-coll__item">Аукцион</li>
+      <li @click="warehouseStore.setShow('')" class="inputs-coll__item">
+        Все типы
+      </li>
+      <li @click="warehouseStore.setShow('Разовая продажа')" class="inputs-coll__item">
+        Разовая продажа
+      </li>
+      <li @click="warehouseStore.setShow('Аукцион')" class="inputs-coll__item">Аукцион</li>
     </ul>
   </div>
 </template>
@@ -48,7 +56,7 @@
   }
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 579.98px) {
   .inputs-coll__list {
     margin: 0 auto;
   }

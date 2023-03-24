@@ -8,7 +8,7 @@ const warehouseStore = useWarehouseStore();
     <div>
       <TransitionGroup name="list">
         <WarehouseCard
-          v-for="warehouse in warehouseStore.searchNameOnFavourites"
+          v-for="warehouse in warehouseStore.sortedListFavourites"
           :key="warehouse.id"
           :warehouse="warehouse"
         />

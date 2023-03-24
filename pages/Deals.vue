@@ -7,7 +7,7 @@ const warehouseStore = useWarehouseStore()
   <div v-if="warehouseStore.deals.total > 0">
     <div>
       <TransitionGroup name="list">
-        <DealCard v-for="warehouse in warehouseStore.searchNameOnDeals" :key="warehouse.id" :warehouse="warehouse" />
+        <DealCard v-for="warehouse in warehouseStore.sortedListDeals" :key="warehouse.id" :warehouse="warehouse" />
       </TransitionGroup>
     </div>
   </div>

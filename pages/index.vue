@@ -9,7 +9,7 @@ const warehouseStore = useWarehouseStore();
     <div class="wh-coll">
       <TransitionGroup name="list">
         <WarehouseCard
-          v-for="warehouse in warehouseStore.searchNameOnWarehouses"
+          v-for="warehouse in warehouseStore.sortedListWarehouses"
           :key="warehouse.id"
           :warehouse="warehouse"
         />
